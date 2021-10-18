@@ -5,3 +5,5 @@
 *.csv
 .idea
 *.sqlite
+build
+dist

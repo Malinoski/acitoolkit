@@ -2,7 +2,8 @@ import json
 import sys
 import acitoolkit.acitoolkit as ACI
 
-session = ACI.Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+# session = ACI.Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+session = ACI.Session("https://10.10.20.14", "admin", "C1sco12345")
 resp = session.login()
 if not resp.ok:
     print('%% Could not login to APIC')

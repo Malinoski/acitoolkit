@@ -1,16 +1,12 @@
-#!/usr/bin/env python
-import json
 from typing import List
 
 from acitoolkit import Session, Pod, Interface, Node, Linecard
 
-session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+# session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+session = Session("https://10.10.20.14", "admin", "C1sco12345")
 resp = session.login()
 if not resp.ok:
     print('%% Could not login to APIC')
-
-# Interfaces
-interfaces_result: List[Interface] = []
 
 # Pods
 pods: List[Pod] = Pod.get(session)
@@ -30,9 +26,7 @@ for pod in pods:
                 # Interfaces
                 interfaces: List[Interface] = Interface.get(session, linecard)
                 for interface in interfaces:
-                    print("Adding interface ### ", "{} ### ".format(interface), "attributes:{} #### ".format(interface.attributes))
-                    interfaces_result.append(interface)
 
-for interface_result in interfaces_result:
-    print("RESUT:", interface_result)
+                    if 'discovery' in interface.attributes['usage']:
 
+                        print("\n{}".format(interface.attributes))

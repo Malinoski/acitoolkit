@@ -14,24 +14,17 @@ epg = EPG('epg1', app)
 
 # Create the physical interface object
 # Obs.:
-INTERFACE = {'type': 'eth',
-             'pod': '1',
-             'node': '101',
-             'module': '1',
-             'port': '39'}
-intf = Interface(INTERFACE['type'],
-                 INTERFACE['pod'],
-                 INTERFACE['node'],
-                 INTERFACE['module'],
-                 INTERFACE['port'])
+intf = Interface(interface_type='eth',
+                 pod='1',
+                 node='101',
+                 module='1',
+                 port='43')
 
 # Create a VLAN interface and attach to the physical interface
-VLAN = {'name': 'my_vlan123',
-        'encap_type': 'vlan',
-        'encap_id': '5'}  # ??????????????????????????????
-vlan_intf = L2Interface(VLAN['name'],
-                        VLAN['encap_type'],
-                        VLAN['encap_id'])
+vlan_intf = L2Interface(name='my_vlan123',
+                        encap_type='vlan',
+                        encap_id='5',
+                        encap_mode='native')  # <-- Mode Access 802.1P
 vlan_intf.attach(intf)
 
 # Attach the EPG to the VLAN interface

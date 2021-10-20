@@ -13,11 +13,13 @@ app = AppProfile('apA', tenant)
 epg = EPG('epg1', app)
 
 # Get interface
-intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='48')
+intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='39')
 
 
 # Build VLAN interface type and attach to the physical interface
-# Obs.: encap_mode='native' means mode Access 802.1P
+# Obs.:
+# encap_mode='native' means mode Access 802.1P
+# encap_id='5' ?
 vlan_intf = L2Interface(name='vlan5', encap_type='vlan', encap_id='5', encap_mode='native')
 vlan_intf.attach(intf)
 

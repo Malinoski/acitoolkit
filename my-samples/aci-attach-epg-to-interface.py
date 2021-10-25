@@ -1,7 +1,7 @@
 from acitoolkit import Session, Tenant, AppProfile, EPG, Interface, L2Interface
 
 session = Session("https://10.10.20.14", "admin", "C1sco12345")
-# session = ACI.Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+# session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
 
 resp = session.login()
 if not resp.ok:
@@ -10,16 +10,13 @@ if not resp.ok:
 # Create the Tenant, App Profile, and EPG
 tenant = Tenant('tenantA')
 app = AppProfile('apA', tenant)
-epg = EPG('epg1', app)
+epg = EPG('epgA', app)
 
-# Get interface
-intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='39')
+# Create (or get existent) interface
+intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='38')
 
-
-# Build VLAN interface type and attach to the physical interface
-# Obs.:
-# encap_mode='native' means mode Access 802.1P
-# encap_id='5' ?
+# Create (or get existent) VLAN interface and attach to the physical interface
+# Obs.: encap_mode='native' means mode Access 802.1P
 vlan_intf = L2Interface(name='vlan5', encap_type='vlan', encap_id='5', encap_mode='native')
 vlan_intf.attach(intf)
 

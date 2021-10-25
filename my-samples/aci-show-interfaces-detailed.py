@@ -4,7 +4,9 @@ from typing import List
 
 from acitoolkit import Session, Pod, Interface, Node, Linecard
 
-session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+# session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+session = Session("https://10.10.20.14", "admin", "C1sco12345")
+
 resp = session.login()
 if not resp.ok:
     print('%% Could not login to APIC')

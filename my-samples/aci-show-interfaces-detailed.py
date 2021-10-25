@@ -19,7 +19,7 @@ for pod in pods:
     # Nodes
     nodes: List[Node] = Node.get(session, pod)
     for node in nodes:
-        print(" ", "# Node",  "name:{}".format(node.name), "role:{}".format(node.role))
+        print(" ", "# Node", "{}".format(node.info()))
 
         # Linecards
         linecards: List[Linecard] = Linecard.get(session, node)

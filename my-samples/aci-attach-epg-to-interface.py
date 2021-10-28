@@ -13,7 +13,7 @@ app = AppProfile('apA', tenant)
 epg = EPG('epgC', app)
 # TODO: Configure this EPG to be associated to a Physical Domain
 
-# Get interface
+# Get interface (p.s.: node can bve a leaf, and module is a linecard)
 intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='40')
 
 # Set a free VLAN, including mode access 802.1P (encap_mode='native') and encapsulation mode 5 (encap_id='5')

@@ -12,6 +12,16 @@ def main():
     tenant_name = "tenantA"
     epg_name = "epgA"
 
+    # Create Tenant, AP and EPG
+    tenant = Tenant(tenant_name)
+    app = AppProfile(ap_name, tenant)
+    epg = EPG(epg_name, app)
+    resp = session.push_to_apic(tenant.get_url(), tenant.get_json())
+    if not resp.ok:
+        print('%% Error: Could not push configuration to APIC')
+        print(resp.text)
+
+    # Associate EPG to a Physical Domain
     url = "/api/mo/uni/tn-{}/ap-{}/epg-{}.json".format(tenant_name, ap_name, epg_name)
     json = {
       "fvAEPg": {

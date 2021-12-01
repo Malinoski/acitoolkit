@@ -10,7 +10,7 @@ def main():
     physical_domain_name = "phys"
     ap_name = "apA"
     tenant_name = "tenantA"
-    epg_name = "epgF"
+    epg_name = "epgA"
 
     url = "/api/mo/uni/tn-{}/ap-{}/epg-{}.json".format(tenant_name, ap_name, epg_name)
     json = {

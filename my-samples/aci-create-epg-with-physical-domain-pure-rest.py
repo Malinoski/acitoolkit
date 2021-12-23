@@ -1,21 +1,31 @@
 #!/usr/bin/env python
-from acitoolkit import Session, Tenant, AppProfile, BridgeDomain, EPG, PhysDomain
+from acitoolkit import Session, Tenant, AppProfile, BridgeDomain, EPG, PhysDomain, Context, NetworkPool, Node
 
 
 def main():
 
-    session = Session("https://10.10.20.14", "admin", "C1sco12345")
+    # Connection
+    # session = Session("https://10.10.20.14", "admin", "C1sco12345")
+    session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
+
     session.login()
 
-    physical_domain_name = "phys"
-    ap_name = "apA"
+    # Names
+    physical_domain_name = "SnV_phys"  # pool 100-199
     tenant_name = "tenantA"
+    ap_name = "apA"
+    bd_name = "bdA"
     epg_name = "epgA"
 
-    # Create Tenant, AP and EPG
+    # Create environment
     tenant = Tenant(tenant_name)
     app = AppProfile(ap_name, tenant)
+    vrf = Context('vrfA', tenant)
+    bd = BridgeDomain(bd_name, tenant)
+    bd.add_context(vrf)
+
     epg = EPG(epg_name, app)
+    epg.add_bd(bd)
     resp = session.push_to_apic(tenant.get_url(), tenant.get_json())
     if not resp.ok:
         print('%% Error: Could not push configuration to APIC')

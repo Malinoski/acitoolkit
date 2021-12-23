@@ -1,4 +1,4 @@
-from acitoolkit import Session, Tenant, AppProfile, EPG, Interface, L2Interface
+from acitoolkit import Session, Tenant, AppProfile, EPG, Interface, L2Interface, BridgeDomain
 
 # session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
 session = Session("https://10.10.20.14", "admin", "C1sco12345")
@@ -10,15 +10,16 @@ if not resp.ok:
 # Create the Tenant, App Profile, and EPG
 tenant = Tenant('tenantA')
 app = AppProfile('apA', tenant)
-epg = EPG('epgC', app)
-# TODO: Configure this EPG to be associated to a Physical Domain
+bd = BridgeDomain('bdA', tenant)
+epg = EPG('epgA', app)
+epg.add_bd(bd)
 
 # Get interface (p.s.: node can bve a leaf, and module is a linecard)
-intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='40')
+intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='1')
 
 # Set a free VLAN, including mode access 802.1P (encap_mode='native') and encapsulation mode 5 (encap_id='5')
-free_vlan = "6"  # TODO: Get a free VLAN in APIC (or in NetworkAPI/environments).
-intf_name_no_space = intf.name.replace(" ", "")  # exp.: eth1/101/1/32
+free_vlan = "101"  # TODO: Get a free VLAN in APIC (or in NetworkAPI/environments).
+intf_name_no_space = intf.name.replace(" ", "")  # exp.: eth1/101/1/1
 vlan_intf = L2Interface(
     name='vlan{}_on_interface_{}'.format(free_vlan, intf_name_no_space),
     encap_type='vlan',

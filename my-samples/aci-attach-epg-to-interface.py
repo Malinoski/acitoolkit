@@ -37,13 +37,12 @@ resp = tenant.push_to_apic(session)
 if not resp.ok:
     print('Error: Could not push tenant configuration to APIC')
 
-# Push the interface attachment to the APIC
-resp = intf.push_to_apic(session)
-if not resp.ok:
-    print('Error: Could not push interface configuration to APIC')
-    print("{}".format(dir(resp)))
-    print("{}".format(resp.reason))
-    print("{}".format(resp.text))
-else:
-    print("{}".format(resp.text))
+# resp = intf.push_to_apic(session)
+# if not resp.ok:
+#     print('Error: Could not push interface configuration to APIC')
+#     print("{}".format(dir(resp)))
+#     print("{}".format(resp.reason))
+#     print("{}".format(resp.text))
+# else:
+#     print("{}".format(resp.text))
 

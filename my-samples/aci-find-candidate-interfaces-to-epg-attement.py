@@ -1,9 +1,11 @@
+from pprint import pprint
 from typing import List
 from requests.models import Response
-from acitoolkit import Session, Pod, Interface, Node, Linecard
+from acitoolkit import Session, Pod, Interface, Node, Linecard, VmmDomain
 
 session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
 # session = Session("https://10.10.20.14", "admin", "C1sco12345")
+
 resp: Response = session.login()
 print(type(resp))
 if not resp.ok:
@@ -11,6 +13,7 @@ if not resp.ok:
 
 # Pods
 pods: List[Pod] = Pod.get(session)
+print(pods)
 for pod in pods:
     print('\nPOD - {}'.format(pod.name))
     # Nodes
@@ -27,7 +30,13 @@ for pod in pods:
                 # Interfaces
                 interfaces: List[Interface] = Interface.get(session, linecard)
                 for interface in interfaces:
-                    print('\nINTERFACE:{}'.format(interface.name))
-                    if 'discovery' in interface.attributes['usage']:
+                    print('\nINTERFACE {}:'.format(interface.name))
+                    print('--- ATTRIBUTES ---- {}'.format(interface.attributes))
+                    print('--- JSON ---- {}'.format(interface.get_json()))
+                    # pprint(interface.get_json())  # pretty json
+                    # print('--- INFO ---- {}'.format(interface.info()))
+                    # print('--- ?? ---- {}'.format(dir(interface)))
+                    # print('--- ?? ---- {}'.format(interface.is_cdp_enabled()))
 
-                        print("AVAILABLE: {}".format(interface.attributes))
+                    if 'discovery' in interface.attributes['usage']:
+                        print("--- AVAILABLE --- TRUE")

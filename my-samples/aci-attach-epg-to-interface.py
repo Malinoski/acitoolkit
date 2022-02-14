@@ -16,7 +16,7 @@ physical_domain_name = "SnV_phys"  # pool 100-199
 # Create the Tenant, App Profile, and EPG
 tenant = Tenant(tenant_name)
 app = AppProfile(ap_name, tenant)
-bd = BridgeDomain('db_public', tenant)
+bd = BridgeDomain('bd_public', tenant)
 vrf = Context('vrf_public', tenant)
 bd.add_context(vrf)
 epg = EPG(epg_name, app)

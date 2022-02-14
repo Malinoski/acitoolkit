@@ -10,7 +10,7 @@ if not resp.ok:
 # Data
 tenant_name = 'tenant_public'
 ap_name = 'ap1_public'
-epg_name = 'my_epg1'
+epg_name = 'my_epg2'
 physical_domain_name = "SnV_phys"  # pool 100-199
 
 # Create the Tenant, App Profile, and EPG
@@ -56,8 +56,8 @@ if not resp.ok:
     exit()
 
 # Set and attach interface to EPG
-intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='31')
-free_vlan = "103"
+intf = Interface(interface_type='eth', pod='1', node='101', module='1', port='33')
+free_vlan = "104"
 vlan_intf = L2Interface(
     name='some_name',
     encap_type='vlan',  # mode access 802.1P
@@ -72,12 +72,17 @@ if not resp.ok:
     print('Error: Could not attach interface: {}'.format(resp))
     exit()
 
-# resp = intf.push_to_apic(session)
-# if not resp.ok:
-#     print('Error: Could not push interface configuration to APIC')
-#     print("{}".format(dir(resp)))
-#     print("{}".format(resp.reason))
-#     print("{}".format(resp.text))
-# else:
-#     print("{}".format(resp.text))
+# Check interface in APIC ():
+check_interface: [Interface] = Interface.get(
+    session,
+    node=intf.node,
+    pod_parent=intf.pod,
+    port=intf.port,
+    module=intf.module)
+
+if check_interface[0].attributes['usage'] == 'epg':
+    print("SUCCESS")
+else:
+    print("FAIL")
+
 

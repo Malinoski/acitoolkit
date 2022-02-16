@@ -6,13 +6,19 @@ session = Session("https://sandboxapicdc.cisco.com", "admin", "!v3G@!4@Y")
 
 session.login()
 
-tenants = Tenant.get(session)
+tenants: [Tenant] = Tenant.get(session)
 for tenant in tenants:
-    print(tenant.name)
-    apps = AppProfile.get(session, tenant)
+    print("# Tenant:")
+    print("name: {}".format(tenant.name))
+
+    apps: [AppProfile] = AppProfile.get(session, tenant)
     for app in apps:
-        epgs = EPG.get(session, app, tenant)
+        print("\t# Application Profile:")
+        print("\tname: {}".format(app.name))
+
+        epgs: [EPG] = EPG.get(session, app, tenant)
         for epg in epgs:
-            print(epg)
+            print("\t\t# EPG:")
+            print("\t\tname: {}".format(epg.name))
 
 

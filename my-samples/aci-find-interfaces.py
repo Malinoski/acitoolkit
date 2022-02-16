@@ -12,16 +12,18 @@ if not resp.ok:
 
 # Pods
 pods: List[Pod] = Pod.get(session)
-print(pods)
 for pod in pods:
-    print('\n# POD - {}'.format(pod.name))
+    print('\n# POD:')
+    print('name: {}'.format(pod.name))
+
     # Nodes
     nodes: List[Node] = Node.get(session, pod)
     for node in nodes:
 
         # Filter
         if node.role == "leaf":
-            print('\n# LEAF - name:{}'.format(node.name))
+            print('\n# LEAF')
+            print('name: {}'.format(node.name))
 
             # Linecards
             linecards: List[Linecard] = Linecard.get(session, node)
